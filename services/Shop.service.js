@@ -14,7 +14,7 @@ module.exports.findOne = (id) => {
 }
 // delete
 module.exports.delete = (id) => {
-    return Shop.deleteOne(id);
+    return Shop.deleteOne({ _id: id });
 }
 // update
 module.exports.update = (id, updateData) => {

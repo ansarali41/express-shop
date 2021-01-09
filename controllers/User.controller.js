@@ -2,6 +2,20 @@ const userService = require('../services/user.service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+module.exports.isAuthenticated = async (req, res, next) => {
+    try {
+        const isVerified = await jwt.verify(req.headers.token, process.env.JWT_SECRET);
+
+        if (!isVerified) {
+            return res.status(400).json({ error: true, data: null, token: null, message: 'user not authenticated' });
+        }
+        next();
+    } catch (e) {
+        console.error(e);
+        return res.status(400).json({ error: e.message, data: undefined, token: undefined, message: "something went wrong" });
+    }
+}
+
 
 // register 
 hashPassword = (password, saltRound) => {
@@ -94,15 +108,15 @@ module.exports.login = async (req, res, next) => {
         const user = await userService.findUserByEmail(req.body.email);
         const matchPassword = await comparePassword(req.body.password, user.password);
 
-        if(!matchPassword) {
-            return res.status(400).json({ error: false, data: null, token: null, message: 'User credentials didn\'t matched'});
+        if (!matchPassword) {
+            return res.status(400).json({ error: false, data: null, token: null, message: 'User credentials didn\'t matched' });
         }
         const userObj = JSON.parse(JSON.stringify(user))
         delete userObj.password;
 
         const token = await jwt.sign({
             data: userObj
-        }, process.env.JWT_SECRET,{
+        }, process.env.JWT_SECRET, {
             expiresIn: '24h'
         });
 
