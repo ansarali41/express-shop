@@ -22,9 +22,10 @@ app.use(cookieParser());
 app.use(cors());
 // app.use(express.static(path.join(__dirname, 'public')));
 
+// app.use(isAuthenticated); //trying to fix it
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/shops',isAuthenticated, shopsRouter);
+app.use('/shops', shopsRouter);
 
 module.exports = app;
 
