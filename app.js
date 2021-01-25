@@ -1,6 +1,7 @@
 require('dotenv').config();
-const db = require("./db/db");
-const cors = require('cors')
+/* eslint-disable no-unused-vars */
+const db = require('./db/db');
+const cors = require('cors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');

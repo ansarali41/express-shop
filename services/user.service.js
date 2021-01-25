@@ -1,8 +1,8 @@
-const UserModel = require('../models/User.model')
+const UserModel = require('../models/User.model');
 
 module.exports.createUser = (userInfo) => {
-    return UserModel.create(userInfo) // here "create" is mongoose create
-}
+    return UserModel.create(userInfo); // here "create" is mongoose create
+};
 module.exports.findUserByEmail = (email) => {
-    return UserModel.findOne({ email: email})
-}
+    return UserModel.findOne({ email: email });
+};
